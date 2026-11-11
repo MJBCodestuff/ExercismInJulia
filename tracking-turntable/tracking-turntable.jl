@@ -1,0 +1,5 @@
+z(x, y) = complex(x, y)
+euler(r, θ) = r * cis(θ)
+rotate(x, y, θ) = reim(z(x, y) * ℯ^(1im * θ))
+rdisplace(x, y, r) = reim((abs(z(x, y)) + r)*ℯ^(1im*angle(z(x,y))))
+findsong(x, y, r, θ) = rdisplace(rotate(x, y, θ)..., r)
