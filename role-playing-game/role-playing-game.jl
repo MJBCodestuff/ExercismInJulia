@@ -1,26 +1,26 @@
-StringOrMissing = # type union definition
-IntOrNothing = # type union definition
+StringOrMissing = Union{String, Missing}
+
+IntOrNothing = Union{Int64, Nothing}
 
 @kwdef mutable struct Player
-
+    name::StringOrMissing = missing
+    level::Int64 = 0
+    health::Int64 = 100
+    mana::IntOrNothing = nothing
 end
 
-function introduce(player::Player)
+introduce(player::Player) = !ismissing(player.name) ? player.name : "Mighty Magician"
 
-end
+increment(mana::Nothing) = 50
+increment(mana::Int64) = mana + 100
+increment(name) = !ismissing(name) ? "$name the Great" : "The Great"
 
-function increment(mana)
-
-end
-
-function increment(name)
-
-end
-
-function title!(player::Player)
-
-end
+title!(player::Player) = player.level == 42 ? player.name = increment(player.name) : player.name
 
 function revive!(player::Player)
-
+    if player.health == 0
+        player.health = 100
+        player.mana = increment(player.mana)
+    end
+    return player
 end
